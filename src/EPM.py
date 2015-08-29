@@ -15,7 +15,7 @@ class EPM:
         unionMatrix = entityMatrix.sum(1).repeat(modelContext.getClassCount(), 1) + entityCountOnClass.repeat(modelContext.getEntityCount(), 0) - intersectMatrix - membershipMatrix
         unionMatrix = sp.csr_matrix(unionMatrix, dtype=float)
 
-        distanceMatrix = 1. - (intersectMatrix / unionMatrix).todense()
+        distanceMatrix = ((unionMatrix - intersectMatrix) / unionMatrix).todense()
 
         compensationMatrix = sp.csr_matrix(~np.isfinite(distanceMatrix)).sum(0)
 
